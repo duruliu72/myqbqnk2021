@@ -1,5 +1,6 @@
 const Login = () => {
     return (<div className="sign-up-section">
+        <img src="http://localhost:8000/static/images/kitten.png" />
         <div className="card sign-up__card">
 
             <div className="card-body">
@@ -9,14 +10,14 @@ const Login = () => {
                 <form action="" method="post">
                     <div className="form-group mt-4">
                         <div className="col-12">
-                            <button className="btn btn-primary myqb-btn btn-fb"><i className="fab fa-facebook-f"></i>Login with facebook</button>
+                            <button className="btn myqb-btn btn-fb"><i className="fab fa-facebook-f"></i>Login with facebook</button>
                         </div>
                     </div>
                 </form>
                 <form action="" method="post">
                     <div className="form-group mt-4">
                         <div className="col-12">
-                            <button className="btn btn-primary myqb-btn btn-g"><i className="fab fa-google"></i> Login with Google</button>
+                            <button className="btn myqb-btn btn-g"><i className="fab fa-google"></i> Login with Google</button>
                         </div>
                     </div>
                 </form>
@@ -43,7 +44,7 @@ const Login = () => {
                     </div>
                     <div className="form-group mt-4">
                         <div className="col-12">
-                            <button className="btn btn-primary myqb-btn">Login</button>
+                            <button className="btn myqb-btn">Login</button>
                         </div>
                     </div>
                     <div className="form-group row mt-4">
