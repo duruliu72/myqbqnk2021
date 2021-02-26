@@ -37,6 +37,7 @@
     border-color: #EB5757;
     transition: all 0.5s ease;
     position: relative;
+    color: #FFFFFF;
 }
 .myqb-btn .fab{
     position: absolute;
@@ -44,6 +45,10 @@
     top: 50%;
     transform: translateY(-50%);
     font-size: 15px;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
 }
 .myqb-btn:hover{
     background-color: #e20e0e;
