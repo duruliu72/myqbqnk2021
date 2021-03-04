@@ -1,6 +1,6 @@
 const Login = () => {
     return (<div className="sign-up-section">
-        <img src="http://localhost:8000/static/images/kitten.png" />
+        <img src="http://api.myqbank.org/static/images/kitten.png" />
         <div className="card sign-up__card">
 
             <div className="card-body">
