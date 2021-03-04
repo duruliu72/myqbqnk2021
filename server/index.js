@@ -1,34 +1,22 @@
-var express = require('express');
-var app = express();
-var multer = require('multer')
-var cors = require('cors');
-app.use(cors())
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'public')
-    },
-    filename: function (req, file, cb) {
-        cb(null, Date.now() + '-' + file.originalname)
-    }
-})
-var upload = multer({ storage: storage }).single('file')
-app.use('/static', express.static('public'))
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
+const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
+const mongoose = require('mongoose');
+const genres = require('./routes/genres');
+const customers = require('./routes/customers');
+const movies = require('./routes/movies');
+const rentals = require('./routes/rentals');
+const express = require('express');
+const app = express();
 
-app.post('/upload', function (req, res) {
-    upload(req, res, function (err) {
-        if (err instanceof multer.MulterError) {
-            return res.status(500).json(err)
-        } else if (err) {
-            return res.status(500).json(err)
-        }
-        return res.status(200).send(req.file)
+mongoose.connect('mongodb://localhost/vidly')
+    .then(() => console.log('Connected to MongoDB...'))
+    .catch(err => console.error('Could not connect to MongoDB...'));
 
-    })
+app.use(express.json());
+app.use('/api/genres', genres);
+app.use('/api/customers', customers);
+app.use('/api/movies', movies);
+app.use('/api/rentals', rentals);
 
-});
-app.listen(8000, function () {
-    console.log('App running on port 8000');
-});
+const port = process.env.PORT || 3005;
+app.listen(port, () => console.log(`Listening on port ${port}...`));
