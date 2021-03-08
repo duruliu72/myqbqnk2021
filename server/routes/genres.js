@@ -5,21 +5,11 @@ const { Genre, validate } = require('../models/genre');
 const express = require('express');
 const router = express.Router();
 
-function asyncMiddleware(handler) {
-  return async (req, res, next) => {
-    try {
-      await handler(req, res);
-    }
-    catch (ex) {
-      next(ex);
-    }
-  };
-}
-router.get('/', asyncMiddleware(async (req, res, next) => {
+router.get('/', async (req, res) => {
+  throw new Error("Could not get Genres");
   const genres = await Genre.find().sort('name');
   res.send(genres);
-}));
-
+});
 router.post('/', auth, async (req, res) => {
   const { error } = validate(_.pick(req.body, ['name']));
   if (error) return res.status(400).send(error.details[0].message);

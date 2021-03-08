@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import Topbar from "../components/common/Topbar";
 import LeftSideBar from "../components/common/LeftSideBar"
@@ -8,6 +8,14 @@ import Chart from "../components/Chart";
 import ICT from "../components/ICT";
 import Footer from "../components/common/Footer";
 const Dashboard = () => {
+    useEffect(() => {
+        fetch('http://localhost:3005/api/genres')
+            .then((response) => response.json())
+            .then((json) => console.log(json))
+            .catch((ex) => {
+                console.log("dsd", ex);
+            });
+    }, []);
     return (
         <>
             {/* Topbar  */}
