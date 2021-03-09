@@ -22,25 +22,25 @@ const app = express();
 //   new winston.transports.File({ filename: 'exceptions.log' })
 // );
 process.on("unhandledRejection", (ex) => {
-  console.log("We Got An unhandle Rejection");
-  // process.exit(1);
-  throw ex;
+    console.log("We Got An unhandle Rejection");
+    // process.exit(1);
+    throw ex;
 });
 if (!config.get('jwtPrivateKey')) {
-  console.error('FATAL ERROR: jwtPrivateKey is not defined.');
-  process.exit(1);
+    console.error('FATAL ERROR: jwtPrivateKey is not defined.');
+    process.exit(1);
 }
 // throw new Error("Something Faild During Startup");
 const p = Promise.reject(new Error("Something Faild Misarably"));
 p.then(() => console.log("Done"))
 mongoose.connect('mongodb://localhost/myqbqnk21', {
-  useUnifiedTopology: true,
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useCreateIndex: true,
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
 })
-  .then(() => console.log('Connected to MongoDB...'))
-  .catch(err => console.error('Could not connect to MongoDB...'));
+    .then(() => console.log('Connected to MongoDB...'))
+    .catch(err => console.error('Could not connect to MongoDB...'));
 app.use(cors());
 app.use(express.json());
 app.use('/api/genres', genres);
