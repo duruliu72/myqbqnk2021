@@ -1,21 +1,20 @@
 import React, { useEffect } from 'react';
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import Topbar from "../components/common/Topbar";
 import LeftSideBar from "../components/common/LeftSideBar"
 import RightSideBar from "../components/common/RightSideBar"
+import Breadcumb from "../components/common/Breadcumb"
 import Overview from "../components/Overview";
 import Chart from "../components/Chart";
 import ICT from "../components/ICT";
 import Footer from "../components/common/Footer";
-const Dashboard = () => {
+const Home = (props) => {
     useEffect(() => {
-        fetch('http://localhost:3005/api/genres')
-            .then((response) => response.json())
-            .then((json) => console.log(json))
-            .catch((ex) => {
-                console.log("dsd", ex);
-            });
+        props.loaddata();
+
     }, []);
+    console.log("Posts", props.posts);
     return (
         <>
             {/* Topbar  */}
@@ -30,17 +29,7 @@ const Dashboard = () => {
 
                 <div className="content">
                     <div className="container-fluid">
-
-
-                        <div className="row">
-                            <div className="col-sm-12">
-                                <h4 className="pull-left page-title">Welcome !</h4>
-                                <ol className="breadcrumb pull-right">
-                                    <li><Link to="/x" href="#">Moltran</Link></li>
-                                    <li className="active">Dashboard</li>
-                                </ol>
-                            </div>
-                        </div>
+                        <Breadcumb title="Welcome !" bcdata={["Moltran", "Home"]} />
                         <Overview />
                         <Chart />
                         <ICT />
@@ -57,5 +46,20 @@ const Dashboard = () => {
         </>
     );
 }
-
-export default Dashboard;
+const mapStateToProps = (state) => {
+    return {
+        posts: state.posts,
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loaddata: () =>
+            dispatch({ type: "FETCH_POSTS", payload: {} }),
+        edit: (item) =>
+            dispatch({
+                type: "EDIT_POST",
+                payload: { id: 1, title: "UPDATE TITLE", body: "UPDATED BODY" },
+            }),
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
