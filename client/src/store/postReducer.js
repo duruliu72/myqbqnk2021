@@ -3,9 +3,8 @@ function nextId(posts) {
     const maxId = posts.reduce((maxId, post) => Math.max(post.id, maxId), -1);
     return maxId + 1;
 }
-
 const initialUserState = {
-    posts: []
+    posts: [],
 }
 const postReducer = function (state = initialUserState, action) {
     switch (action.type) {

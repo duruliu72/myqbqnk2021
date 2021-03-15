@@ -1,6 +1,43 @@
-const Login = () => {
+import React, { useState, useEffect } from 'react';
+import { useHistory, useLocation, Redirect } from "react-router-dom";
+import auth from "../services/authService"
+const Login = (props) => {
+    let history = useHistory();
+    let location = useLocation();
+    const [user, setUser] = useState({
+        email: "",
+        password: ""
+    });
+    const [errors, setErrors] = useState({});
+    let onChangeHandler = e => {
+        let userCopy = { ...user }
+        userCopy[e.currentTarget.name] = e.currentTarget.value;
+        setUser(userCopy);
+    }
+    const submitHandle = async (e) => {
+        e.preventDefault();
+        // const res = await axios.post("http://localhost:3005/api/auth", {
+        //     email: "duruliu72@gmail.com",
+        //     password: "123456"
+        // });
+        try {
+            await auth.login(user);
+            let { from } = location.state || { from: { pathname: "/" } };
+            window.location = from.pathname;
+
+        } catch (ex) {
+            if (ex.response && ex.response.status === 400) {
+                const errorsTemp = { ...errors }
+                errorsTemp.email = ex.response.data;
+                setErrors(errorsTemp);
+            }
+        }
+    }
+    if (auth.authUser()) {
+        return <Redirect to="/" />
+    }
     return (<div className="sign-up-section">
-        <img src="http://api.myqbank.org/static/images/kitten.png" />
+        {/* <img src="http://api.myqbank.org/static/images/kitten.png" /> */}
         <div className="card sign-up__card">
 
             <div className="card-body">
@@ -24,15 +61,18 @@ const Login = () => {
                 <div>
                     <p className="w-email login-em">Or login with email or mobile</p>
                 </div>
-                <form className="mt-4" action="register.html" method="POST" enctype="multipart/form-data">
+                <form className="mt-4" action="register.html" onSubmit={(e) => {
+                    submitHandle(e)
+                }}>
                     <div className="form-group">
                         <div className="col-12">
-                            <input className="form-control myqb-control" type="text" name="email" placeholder="Enter Email/Mobile Number" />
+                            <input className="form-control myqb-control" type="text" name="email" onChange={onChangeHandler} value={user.email} placeholder="Enter Email/Mobile Number" />
+                            {(errors && errors.email) && <div className="alert alert-danger">{errors.email}</div>}
                         </div>
                     </div>
                     <div className="form-group">
                         <div className="col-12">
-                            <input className="form-control myqb-control" type="text" name="password" placeholder="Enter Password" />
+                            <input className="form-control myqb-control" type="text" name="password" onChange={onChangeHandler} value={user.password} placeholder="Enter Password" />
                         </div>
                     </div>
                     <div className="form-group form-check">

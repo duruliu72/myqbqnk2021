@@ -14,11 +14,11 @@ const Home = (props) => {
         props.loaddata();
 
     }, []);
-    console.log("Posts", props.posts);
+    // console.log("Posts", props.posts);
     return (
         <>
             {/* Topbar  */}
-            <Topbar />
+            <Topbar user={props.user} />
             {/* /Topbar  */}
 
             {/* Left Sidebar Star */}
